@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Rozbaluj - Dárek, který nerozbalíš jen tak</title>
+  <meta property="og:title" content="Rozbaluj - Osobní dárky na míru" />
+  <meta property="og:description" content="Kompletně na míru konkrétnímu člověku. Žádný univerzální box. Každý je originál." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #2563EB;
+      --purple:  #A855F7;
+      --coral:   #FB7185;
+      --mint:    #34D399;
+      --yellow:  #FACC15;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-100: #f1f5f9;
+      --slate-50:  #f8fafc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #fff;
+      color: var(--slate-900);
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4,h5,h6 { font-family: 'Comfortaa', sans-serif; }
+
+    /* ── BLOBS ─────────────────────────────────── */
+    .blob-shape {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--slate-100);
+      height: 80px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      background: var(--blue);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      transform: rotate(3deg);
+    }
+
+    .nav-logo-text {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 600;
+      color: var(--slate-600);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    .btn-nav {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 12px 24px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(168,85,247,0.25);
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-nav:hover {
+      background: rgba(168,85,247,0.9);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding: 192px 24px 128px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-blob-1 {
+      width: 380px; height: 380px;
+      background: var(--blue);
+      top: 0; left: -80px;
+    }
+    .hero-blob-2 {
+      width: 500px; height: 500px;
+      background: var(--purple);
+      top: 80px; right: -160px;
+    }
+    .hero-blob-3 {
+      width: 256px; height: 256px;
+      background: var(--coral);
+      bottom: 0;
+      left: 33%;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: rgba(250,204,21,0.2);
+      border: 1px solid rgba(250,204,21,0.3);
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #a16207;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(250,204,21,0.1);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-h1 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 800;
+      color: var(--slate-900);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .hero-h1 .grad {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .hero-h1 .underline-svg {
+      position: absolute;
+      width: 100%;
+      height: 12px;
+      bottom: -4px;
+      left: 0;
+      color: rgba(250,204,21,0.6);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--slate-600);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+      font-weight: 500;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 40px;
+      background: linear-gradient(135deg, var(--blue), var(--purple), var(--coral));
+      color: #fff;
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 20px 48px rgba(168,85,247,0.35);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-main::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.2);
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 24px 56px rgba(168,85,247,0.45); }
+    .btn-main:hover::after { transform: translateY(0); }
+    .btn-main .arrow { transition: transform 0.2s; }
+    .btn-main:hover .arrow { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 32px;
+      color: var(--slate-600);
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--purple); }
+
+    .btn-ghost-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--purple);
+      font-size: 1rem;
+    }
+
+    /* Floating cards */
+    .float-card {
+      position: absolute;
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border: 2px solid var(--slate-50);
+      z-index: 10;
+    }
+
+    .float-card-right {
+      top: 80px;
+      right: 8%;
+      display: none;
+      transform: rotate(6deg);
+    }
+
+    .float-card-left {
+      bottom: 40px;
+      left: 8%;
+      display: none;
+    }
+
+    @media (min-width: 1024px) {
+      .float-card-right, .float-card-left { display: block; }
+    }
+
+    .float-card img {
+      width: 96px; height: 96px;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .float-card-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .float-card-icon {
+      width: 48px; height: 48px;
+      background: rgba(52,211,153,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      margin: 0 auto 8px;
+    }
+
+    .float-card-center { text-align: center; }
+    .float-card-center .name { font-weight: 700; font-size: 0.75rem; display: block; }
+    .float-card-center .sub  { font-size: 0.65rem; color: var(--slate-500); }
+
+    @keyframes floatA {
+      0%,100% { transform: rotate(6deg) translateY(0); }
+      50%      { transform: rotate(6deg) translateY(-20px); }
+    }
+    @keyframes floatB {
+      0%,100% { transform: rotate(-3deg) translateY(0); }
+      50%      { transform: rotate(-3deg) translateY(15px); }
+    }
+    .float-card-right { animation: floatA 4s ease-in-out infinite; }
+    .float-card-left  { animation: floatB 5s 1s ease-in-out infinite; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── TICKER ────────────────────────────────── */
+    .ticker-section {
+      background: #fff;
+      padding: 40px 0;
+      border-top: 1px solid var(--slate-100);
+      border-bottom: 1px solid var(--slate-100);
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 48px;
+      width: max-content;
+      animation: ticker 35s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--slate-50);
+      padding: 16px 32px;
+      border-radius: 16px;
+      border: 1px solid var(--slate-100);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      flex-shrink: 0;
+    }
+
+    .ticker-stars { color: var(--yellow); font-size: 0.8rem; letter-spacing: 2px; }
+
+    .ticker-name {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 0.9rem;
+    }
+
+    .ticker-text {
+      color: var(--slate-600);
+      font-weight: 500;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    /* ── HOW IT WORKS ──────────────────────────── */
+    .how-section {
+      padding: 96px 24px;
+      background: rgba(37,99,235,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-center {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-h2 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 1.15rem;
+      color: var(--slate-600);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature-card {
+      background: #fff;
+      padding: 32px;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+      border: 2px solid transparent;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      border-color: rgba(168,85,247,0.2);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.12);
+    }
+
+    .card-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .card-title {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      color: var(--slate-600);
+      line-height: 1.65;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* ── SHOWCASE ──────────────────────────────── */
+    .showcase-section {
+      padding: 96px 24px;
+      background: rgba(168,85,247,0.04);
+    }
+
+    .showcase-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      flex-wrap: wrap;
+    }
+
+    .showcase-images {
+      flex: 1;
+      min-width: 280px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      position: relative;
+    }
+
+    .showcase-images::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%; height: 100%;
+      background: rgba(168,85,247,0.1);
+      filter: blur(60px);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .showcase-images img {
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/5;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.5s;
+    }
+    .showcase-images img:first-child { transform: rotate(2deg); }
+    .showcase-images img:last-child  { transform: rotate(-2deg) translateY(32px); }
+    .showcase-images img:hover { transform: rotate(0deg) !important; }
+
+    .showcase-text { flex: 1; min-width: 280px; }
+
+    .showcase-tag {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--purple);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .showcase-h2 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 32px;
+      line-height: 1.2;
+    }
+
+    .showcase-p {
+      font-size: 1.1rem;
+      color: var(--slate-600);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      margin-bottom: 16px;
+    }
+
+    .check-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(52,211,153,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mint);
+      flex-shrink: 0;
+      font-size: 0.7rem;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 16px;
+      background: #fff;
+      color: var(--slate-900);
+      border: 2px solid #e2e8f0;
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--purple);
+      color: var(--purple);
+      background: rgba(168,85,247,0.04);
+    }
+
+    /* ── CTA SECTION ───────────────────────────── */
+    .cta-section {
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--blue), var(--purple), var(--coral));
+      opacity: 0.92;
+    }
+
+    .cta-circle-1 {
+      position: absolute;
+      width: 256px; height: 256px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      filter: blur(60px);
+      top: 0; left: 0;
+      transform: translate(-50%, -50%);
+    }
+    .cta-circle-2 {
+      position: absolute;
+      width: 384px; height: 384px;
+      background: rgba(250,204,21,0.3);
+      border-radius: 50%;
+      filter: blur(60px);
+      bottom: 0; right: 0;
+      transform: translate(50%, 50%);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-h2 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 32px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    }
+
+    .cta-p {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+      margin-bottom: 48px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 48px;
+      background: #fff;
+      color: var(--purple);
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-white:hover {
+      transform: scale(1.05);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: #fff;
+      border-top: 1px solid var(--slate-100);
+      padding: 80px 24px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    .footer-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-logo-icon {
+      width: 32px; height: 32px;
+      background: var(--slate-900);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .footer-logo-text {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 600;
+      color: var(--slate-500);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-size: 0.9rem;
+    }
+    .footer-links a:hover { color: var(--blue); }
+
+    .footer-copy {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--slate-400);
+      font-weight: 500;
+    }
+
+    /* ── SCROLL REVEAL ─────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo-wrap">
+        <div class="nav-logo-icon">🎁</div>
+        <span class="nav-logo-text">Rozbaluj</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#jak-to-funguje">Jak to funguje</a></li>
+        <li><a href="#pribehy">Příběhy</a></li>
+        <li><a href="#cta">Ceník</a></li>
+      </ul>
+      <a href="#cta" class="btn-nav">Začít tvořit</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob-shape hero-blob-1"></div>
+    <div class="blob-shape hero-blob-2"></div>
+    <div class="blob-shape hero-blob-3"></div>
+
+    <!-- Floating card right -->
+    <div class="float-card float-card-right">
+      <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=150&h=150&fit=crop" alt="Gift" />
+      <div class="float-card-label">
+        <span style="font-weight:700;font-size:0.75rem;">Pro Aničku</span>
+        <span style="color:#FB7185;">❤</span>
+      </div>
+    </div>
+
+    <!-- Floating card left -->
+    <div class="float-card float-card-left" style="transform:rotate(-3deg);">
+      <div class="float-card-icon">😊</div>
+      <div class="float-card-center">
+        <span class="name">100% Úsměv</span>
+        <span class="sub">Zaručeno</span>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <span class="hero-badge">✨ Děláme radost, ne krabice</span>
+      <h1 class="hero-h1">
+        Dárek, který nerozbalíš
+        <span class="grad">
+          jen tak
+          <svg class="underline-svg" viewBox="0 0 100 10" preserveAspectRatio="none" fill="none">
+            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="6"/>
+          </svg>
+        </span>.
+      </h1>
+      <p class="hero-sub">
+        Kompletně na míru konkrétnímu člověku.<br>
+        Žádný univerzální box. Každý je originál.
+      </p>
+      <div class="hero-btns">
+        <a href="#cta" class="btn-main">
+          Vytvořit dárek na míru
+          <span class="arrow">→</span>
+        </a>
+        <a href="#jak-to-funguje" class="btn-ghost">
+          <div class="btn-ghost-icon">📦</div>
+          Jak to vypadá?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <section class="ticker-section">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="jak-to-funguje">
+    <div class="section-inner">
+      <div class="section-center reveal">
+        <h2 class="section-h2">Jak vzniká <span style="color:var(--blue);">zázrak?</span></h2>
+        <p class="section-sub">Zapomeň na nudné e-shopy. Tady tvoříme zážitky.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card reveal reveal-d1">
+          <div class="card-icon" style="background:var(--blue);">✨</div>
+          <h3 class="card-title">1. Řekneš nám o kom to je</h3>
+          <p class="card-desc">Vyplníš zábavný kvíz. Co má rád/a? Co nesnáší? Je to blázen do avokáda nebo miluje sci-fi?</p>
+        </div>
+        <div class="feature-card reveal reveal-d2">
+          <div class="card-icon" style="background:var(--purple);">📦</div>
+          <h3 class="card-title">2. My vymyslíme obsah</h3>
+          <p class="card-desc">Náš tým kreativců sestaví box přesně na míru. Žádné ležáky ze skladu, ale pečlivě vybrané kousky.</p>
+        </div>
+        <div class="feature-card reveal reveal-d3">
+          <div class="card-icon" style="background:var(--coral);">🎉</div>
+          <h3 class="card-title">3. Předáš a sleduješ reakci</h3>
+          <p class="card-desc">Doručíme v krásném balení. Ty už jen čekáš na ten moment překvapení a radosti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE -->
+  <section class="showcase-section" id="pribehy">
+    <div class="showcase-inner">
+      <div class="showcase-images reveal">
+        <img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=400&h=500&fit=crop" alt="Gift 1" />
+        <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=500&fit=crop" alt="Gift 2" />
+      </div>
+      <div class="showcase-text reveal reveal-d1">
+        <span class="showcase-tag">#RozbalujRadost</span>
+        <h2 class="showcase-h2">Každá krabice má svůj <span style="color:var(--purple);">příběh</span></h2>
+        <p class="showcase-p">
+          Není to jen o věcech uvnitř. Je to o tom, že jsi si dal/a tu práci. Že jsi na toho druhého myslel/a. My tomu jen dáváme formu.
+        </p>
+        <ul class="check-list">
+          <li>
+            <div class="check-icon">✓</div>
+            Ručně psaný vzkaz v každém balení
+          </li>
+          <li>
+            <div class="check-icon">✓</div>
+            Ekologické a udržitelné balení
+          </li>
+          <li>
+            <div class="check-icon">✓</div>
+            Možnost přidat vlastní fotky
+          </li>
+        </ul>
+        <a href="#cta" class="btn-outline">Prohlédnout ukázky →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-circle-1"></div>
+    <div class="cta-circle-2"></div>
+    <div class="cta-inner reveal">
+      <h2 class="cta-h2">Připraveni udělat radost?</h2>
+      <p class="cta-p">Stačí pár kliknutí a vytvoříme spolu dárek, na který se nezapomíná.</p>
+      <a href="#" class="btn-white">
+        🎁 Chci vytvořit dárek
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-logo-wrap">
+          <div class="footer-logo-icon">🎁</div>
+          <span class="footer-logo-text">Rozbaluj</span>
+        </div>
+        <ul class="footer-links">
+          <li><a href="#">O nás</a></li>
+          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© <span id="year"></span> Rozbaluj.cz — Vyrobeno s láskou a kofeinem.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Ticker
+    const reviews = [
+      { name: 'Pavel',  text: 'Bylo to úžasný a originální.' },
+      { name: 'Honza',  text: 'Nevím jak to dokázali, ale poznali mě líp než já sám.' },
+      { name: 'Lucie',  text: 'Nejlepší dárek, co jsem kdy dostala. Fakt pecka!' },
+      { name: 'Marek',  text: 'Konečně něco, co není nuda z obchoďáku.' },
+      { name: 'Alena',  text: 'Všechno proběhlo hladce a výsledek byl dechberoucí.' },
+      { name: 'Petra',  text: 'Doporučuji všem, kdo chtějí opravdu potěšit.' },
+    ];
+
+    const track = document.getElementById('tickerTrack');
+    [...reviews, ...reviews].forEach(r => {
+      const item = document.createElement('div');
+      item.className = 'ticker-item';
+      item.innerHTML = `
+        <span class="ticker-stars">★★★★★</span>
+        <span class="ticker-name">${r.name}:</span>
+        <span class="ticker-text">"${r.text}"</span>
+      `;
+      track.appendChild(item);
+    });
+  </script>
+
+</body>
+</html>
