@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platba zrušena - Rozbaluj.cz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #64748b, #94a3b8);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 24px;
+      padding: 64px 48px;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(100,116,139,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      font-size: 2.5rem;
+    }
+
+    h1 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, #2563EB, #A855F7);
+      color: #fff;
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      border-radius: 100px;
+      text-decoration: none;
+      margin-right: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(37,99,235,0.4);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #64748b;
+      border: 2px solid #e2e8f0;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      box-shadow: none;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">💭</div>
+    <h1>Platba zrušena</h1>
+    <p>
+      Žádný problém! Objednávka nebyla dokončena.<br>
+      Pokud to bylo nedopatřením, můžeš to zkusit znovu.
+    </p>
+
+    <div class="buttons">
+      <a href="/#cta" class="btn">Zkusit znovu</a>
+      <a href="/" class="btn btn-secondary">Zpět na hlavní stránku</a>
+    </div>
+  </div>
+</body>
+</html>

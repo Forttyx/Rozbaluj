@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Děkujeme! - Rozbaluj.cz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #2563EB, #A855F7, #FB7185);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 24px;
+      padding: 64px 48px;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #34D399, #10B981);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      font-size: 2.5rem;
+      animation: pop 0.5s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    h1 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .info-box {
+      background: rgba(37,99,235,0.05);
+      border: 2px solid rgba(37,99,235,0.1);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 32px 0;
+      text-align: left;
+    }
+
+    .info-box h3 {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #2563EB;
+      margin-bottom: 12px;
+    }
+
+    .info-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-box li {
+      font-size: 0.95rem;
+      color: #475569;
+      margin-bottom: 8px;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .info-box li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #34D399;
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, #2563EB, #A855F7);
+      color: #fff;
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      border-radius: 100px;
+      text-decoration: none;
+      margin-top: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(37,99,235,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">✓</div>
+    <h1>Platba úspěšná! 🎉</h1>
+    <p>
+      <strong>Děkujeme za objednávku!</strong><br>
+      Na emailovou adresu ti přišlo potvrzení platby.
+    </p>
+
+    <div class="info-box">
+      <h3>Co bude následovat?</h3>
+      <ul>
+        <li>Do 24 hodin ti pošleme dotazník na míru</li>
+        <li>Vyplníš informace o obdarovaném</li>
+        <li>Vytvoříme personalizovaný box</li>
+        <li>Doručíme do 3 pracovních dnů</li>
+      </ul>
+    </div>
+
+    <p style="font-size: 0.9rem; color: #94a3b8;">
+      Máš otázky? Napiš nám na <strong>info@rozbaluj.cz</strong>
+    </p>
+
+    <a href="/" class="btn">Zpět na hlavní stránku</a>
+  </div>
+</body>
+</html>
